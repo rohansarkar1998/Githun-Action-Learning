@@ -1,0 +1,8 @@
+name: Github actions triggers
+on: push
+jobs:
+    echo:
+      runs-on: ubuntu-latest
+      steps:
+          - name: Show on triggers
+            run: echo "the evemt name is push"
