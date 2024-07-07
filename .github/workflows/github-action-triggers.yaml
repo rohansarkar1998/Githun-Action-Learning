@@ -1,8 +1,13 @@
 name: Github actions triggers
-on: push
+on: 
+  push:
+  pull:
+  schedule:
+      - cron: '* * * * *'
+  workflow_dispatch:   #This enable to run the action from console
 jobs:
     echo:
       runs-on: ubuntu-latest
       steps:
           - name: Show on triggers
-            run: echo "the evemt name is push"
+            run: echo "the evemt name is ${{ github.event_name }}"
