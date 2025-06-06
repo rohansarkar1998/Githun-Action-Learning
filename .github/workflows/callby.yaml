@@ -1,9 +1,9 @@
 name: this is called by GHA1
 on:
    workflow_run:
-      workflows: Github Action 01
+      workflows: ["Github Action 01"]
       types:
-         - complete
+         - completed
 jobs:
    call_job:
            name: call the job
