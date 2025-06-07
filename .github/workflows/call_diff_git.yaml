@@ -1,5 +1,8 @@
 name: Call a different repo
 on: workflow_dispatch
+env:
+  REPO2_PAT: ${{ secrets.GIT_PAT }}
+   
 jobs:
    call_repo2:
       name: This will call a github workflow from diff branch
@@ -12,7 +15,7 @@ jobs:
               curl -L \
                -X POST \
                -H "Accept: application/vnd.github+json" \
-               -H "Authorization: Bearer $REPO2_PAT" \
+               -H "Authorization: Bearer ${{ env.REPO2_PAT }}" \
                -H "X-GitHub-Api-Version: 2022-11-28" \
                https://api.github.com/repos/rohansarkar1998/Github_Action/dispatches \
                -d '{"event_type":"trigger-from-repo2"}'
