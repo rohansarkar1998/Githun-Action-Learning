@@ -1,0 +1,13 @@
+name: Call a different repo
+on: workflow_dispatch
+jobs:
+   call_repo2:
+      name: This will call a github workflow from diff branch
+      runs-on: ubuntu-letest
+      steps:
+        - name: call github action 2
+          run: |
+            curl -X POST \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/<owner>/<repo2>/dispatches \
+            -d '{"event_type":"trigger-from-repo1"}'
