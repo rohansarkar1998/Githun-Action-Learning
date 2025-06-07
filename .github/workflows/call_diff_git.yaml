@@ -9,5 +9,5 @@ jobs:
           run: |
             curl -X POST \
             -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/rohansarkar1998/Github_Action/dispatches \
+            https://github.com/rohansarkar1998/Github_Action.git/dispatches \
             -d '{"event_type":"trigger-from-repo1"}'
