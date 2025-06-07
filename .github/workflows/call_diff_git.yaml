@@ -6,8 +6,11 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - name: call github action 2
+          env:
+              REPO2_PAT: ${{ secrets.git_pat }}
           run: |
             curl -X POST \
             -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $REPO2_PAT" \
             https://github.com/rohansarkar1998/Github_Action.git/dispatches \
             -d '{"event_type":"trigger-from-repo1"}'
