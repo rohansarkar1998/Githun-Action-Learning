@@ -22,3 +22,6 @@ jobs:
         
       - name: Execute Python code
         run: python3 python-file.py
+
+      - name: print files
+        run: ls
