@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+           token: ${{ secrets.PAT_TOKEN }}
 
       - name: Setup Python
         uses: actions/setup-python@v6
@@ -41,4 +43,13 @@ jobs:
             ls
             cd recuring-files
             ls
+      - name: Upload the recuring files to github
+        run: |
+           git config user.name "rohansarkar1998"
+           git config user.email "rohan.mili.98@gamil.com"
+           cd recuring-files
+           git add .
+           git commit -m "Pushing code to github"
+           git push origin master
+           
             
