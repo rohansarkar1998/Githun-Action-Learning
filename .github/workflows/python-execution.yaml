@@ -28,7 +28,7 @@ jobs:
       - name: Find the files which will be uploaded to s3
         run: |
            mkdir s3-upload-files
-           find . -type f -name "datafiles*" | xargs -I {} cp {} s3-upload-files/
+           find . -type f -name "datafile*" | xargs -I {} cp {} s3-upload-files/
            ls
            cd s3-upload-files
            ls
