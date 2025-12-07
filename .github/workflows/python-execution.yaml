@@ -39,7 +39,7 @@ jobs:
             month=$(date +"%-m")
             echo "$month"
             mkdir recuring-files-1
-            find . -type f -name "$month*" | xargs -I {} cp {} recuring-files/
+            find . -type f -name "$month*" | xargs -I {} cp {} recuring-files-1/
             ls
             cd recuring-files
             ls
