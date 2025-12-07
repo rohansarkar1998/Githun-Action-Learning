@@ -34,18 +34,20 @@ jobs:
            ls
            cd s3-upload-files
            ls
-      - name: Find the files which are recuring files
-        run: |
-            month=$(date +"%-m")
-            echo "$month"
-            mkdir recuring-files-1
-            find . -type f -name "$month*" | xargs -I {} cp {} recuring-files-1/
-            ls
+      # - name: Find the files which are recuring files
+      #   run: |
+      #       month=$(date +"%-m")
+      #       echo "$month"
+      #       mkdir recuring-files-1
+      #       find . -type f -name "$month*" | xargs -I {} cp {} recuring-files-1/
+      #       ls
       - name: Upload the recuring files to github
         run: |
+           month=$(date +"%-m")
+           echo "$month"
            git config user.name "rohansarkar1998"
            git config user.email "rohan.mili.98@gamil.com"
-           git add recuring-files-1/* || true
+           gfind . -type f -name "${month}*" -exec git add {} \;
            git commit -m "Pushing code to github"
            git push origin main
            
