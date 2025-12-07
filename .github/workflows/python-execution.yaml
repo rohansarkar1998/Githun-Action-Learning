@@ -31,7 +31,7 @@ jobs:
            find . -type f -name "datafiles*" | xargs -I {} cp {} s3-upload-files/
       - name: Find the files which are recuring files
         run: |
-            month = date +"%-m"
+            month = $(date +"%-m")
             echo "$month"
             mkdir recuring-files
             
