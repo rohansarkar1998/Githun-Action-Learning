@@ -25,3 +25,13 @@ jobs:
 
       - name: print files
         run: ls
+      - name: Find the files which will be uploaded to s3
+        run: |
+           mkdir s3-upload-files
+           find . -type f -name "datafiles*" | xargs -I {} cp {} s3-upload-files/
+      - name: Find the files which are recuring files
+        run: |
+            month = date +"%-m"
+            echo "$month"
+            mkdir recuring-files
+            
