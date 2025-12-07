@@ -38,7 +38,7 @@ jobs:
         run: |
             month=$(date +"%-m")
             echo "$month"
-            mkdir recuring-files
+            mkdir recuring-files-1
             find . -type f -name "$month*" | xargs -I {} cp {} recuring-files/
             ls
             cd recuring-files
@@ -47,7 +47,7 @@ jobs:
         run: |
            git config user.name "rohansarkar1998"
            git config user.email "rohan.mili.98@gamil.com"
-           git add recuring-files || true
+           git add recuring-files-1 || true
            git commit -m "Pushing code to github"
            git push origin main
            
