@@ -47,8 +47,7 @@ jobs:
         run: |
            git config user.name "rohansarkar1998"
            git config user.email "rohan.mili.98@gamil.com"
-           cd recuring-files
-           git add .
+           git add recuring-files || true
            git commit -m "Pushing code to github"
            git push origin main
            
