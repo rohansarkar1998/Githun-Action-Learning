@@ -3,27 +3,7 @@ name: Terraform GCP
 on:
   push:
     branches: [ "main" ]
-
-permissions:
-  id-token: write
-  contents: read
-
-jobs:
-  terraform:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Authenticate to GCP
-      uses: google-github-actions/auth@v2
-      with:
-        workload_identity_provider: name: Terraform GCP
-
-on:
-  push:
-    branches: [ "main" ]
+  workflow_dispatch: 
 
 permissions:
   id-token: write
