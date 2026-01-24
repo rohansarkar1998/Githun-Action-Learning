@@ -1,0 +1,44 @@
+name: Terraform GCP
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Authenticate to GCP
+      uses: google-github-actions/auth@v2
+      with:
+        workload_identity_provider: name: Terraform GCP
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Authenticate to GCP
+      uses: google-github-actions/auth@v2
+      with:
+        workload_identity_provider: principal://iam.googleapis.com/projects/624218265818/locations/global/workloadIdentityPools/gha-oidc/subject/SUBJECT_ATTRIBUTE_VALUE
+        service_account: gha-tf-integration@project-10fa8246-5bd3-4c72-acd.iam.gserviceaccount.com
