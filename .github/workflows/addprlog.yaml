@@ -46,7 +46,7 @@ jobs:
 
           echo "Running audit logic for PUSH to main"
 
-          BUCKET="email-image-test-messi "
+          BUCKET="email-image-test-messi"
           USER=${{ github.actor }}
           EVENT_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
