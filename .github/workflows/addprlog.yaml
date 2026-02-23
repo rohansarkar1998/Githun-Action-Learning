@@ -1,6 +1,12 @@
-name: Infra Pipeline
+name: PR Audit Capture
 
 on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - 'dev-test/**'
+      - 'prod-test/**'
+
   push:
     branches:
       - main
@@ -8,17 +14,72 @@ on:
       - 'dev-test/**'
       - 'prod-test/**'
 
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'dev-test/**'
-      - 'prod-test/**'
 jobs:
-  detect-change:
-    name: detect changes
-    runs-on: ubuntu-20.04
+  capture-pr-details:
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
-      
+
+      - name: Get Changed Files
+        id: changed
+        run: |
+          echo "Event Name: ${{ github.event_name }}"
+
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "Fetching base branch"
+            git fetch origin ${{ github.base_ref }}
+            git diff --name-only origin/${{ github.base_ref }} > changed_files.txt
+
+            PR_NUMBER=${{ github.event.pull_request.number }}
+            PR_USER=${{ github.event.pull_request.user.login }}
+            PR_CREATED=${{ github.event.pull_request.created_at }}
+
+          else
+            # Push event
+            git diff --name-only ${{ github.event.before }} ${{ github.sha }} > changed_files.txt
+
+            PR_NUMBER="N/A (Push Event)"
+            PR_USER=${{ github.actor }}
+            PR_CREATED=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          fi
+
+          echo "PR Number: $PR_NUMBER"
+          echo "Triggered By: $PR_USER"
+          echo "Time: $PR_CREATED"
+
+          echo "Changed files:"
+          cat changed_files.txt
+
+          echo "----- Processing Changed Files -----"
+
+          while read FILE; do
+
+            # Detect Environment
+            if [[ "$FILE" == dev-test/* ]]; then
+              ENVIRONMENT="dev"
+            elif [[ "$FILE" == prod-test/* ]]; then
+              ENVIRONMENT="prod"
+            else
+              ENVIRONMENT="unknown"
+            fi
+
+            # Process only description.md inside CCR folders
+            if [[ "$FILE" == dev-test/*/description.md || "$FILE" == prod-test/*/description.md ]]; then
+
+              echo ""
+              echo "Environment: $ENVIRONMENT"
+              echo "Changed File: $FILE"
+
+              if [ -f "$FILE" ]; then
+                echo "Description Content:"
+                echo "----------------------"
+                cat "$FILE"
+                echo "----------------------"
+              else
+                echo "File was deleted"
+              fi
+            fi
+
+          done < changed_files.txt
