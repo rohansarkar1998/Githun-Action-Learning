@@ -19,5 +19,6 @@ jobs:
     name: detect changes
     runs-on: ubuntu-20.04
     steps:
-      - name: checkout
-        uses: action/checkout
+      - name: Checkout
+        uses: actions/checkout@v4
+      
