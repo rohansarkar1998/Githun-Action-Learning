@@ -105,18 +105,20 @@ jobs:
             if [ -f existing.json ]; then
 
               echo "Policy exists → Updating"
-
               jq \
-                --arg date "$EVENT_TIME" \
-                --arg actor "$USER" \
-                --arg pname "$POLICY_NAME" \
-                '
-                .policy_name = $pname |
-                .last_updated_at = $date |
-                .last_updated_by = $actor |
-                .history += [{"date": $date, "actor": $actor, "action": "updated"}]
-                ' existing.json > updated.json
-
+              --arg date "$EVENT_TIME" \
+              --arg actor "$USER" \
+              --arg pname "$POLICY_NAME" \
+              '
+              .policy_name = $pname |
+              .last_updated_at = $date |
+              .last_updated_by = $actor |
+              .history += [{
+                 "date": $date,
+                 "actor": $actor,
+                 "action": "updated"
+               }]
+             ' existing.json > updated.json
               aws s3 cp updated.json s3://$BUCKET/$S3_KEY
 
               rm existing.json updated.json
