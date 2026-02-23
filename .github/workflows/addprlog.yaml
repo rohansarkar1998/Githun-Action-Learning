@@ -62,7 +62,7 @@ jobs:
           echo "----- Extracting Unique CCR Folders -----"
 
           # Extract unique dev-test/ccrX or prod-test/ccrX folders
-          FOLDERS=$(awk -F/ '/^(dev-test|prod-test)\// {print $1"/"$2}' changed_files.txt | sort -u)
+          FOLDERS=$(awk -F/ '/^(dev-test|prod-test)\// {print $1"/"$2"/"$3}' changed_files.txt | sort -u)
 
           for FOLDER in $FOLDERS; do
 
