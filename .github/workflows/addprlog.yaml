@@ -1,0 +1,23 @@
+name: Infra Pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'dev-test/**'
+      - 'prod-test/**'
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'dev-test/**'
+      - 'prod-test/**'
+jobs:
+  detect-change:
+    name: detect changes
+    runs-on: ubuntu-20.04
+    steps:
+      - name: checkout
+        uses: action/checkout
